@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+{% block title %}{% trans "Dashboard" %}{% endblock %}
+{% block content %}
+
+<div class="row pt-5">
+    <div class="col text-center"><h4>Teachers Directory</h4></div>
+</div>
+<hr/>
+<a href="{% url 'admin_upload_view' %}" class="btn btn-paypaya">Upload Teacher Details</a><small>(Only admins can access)</small>
+<div class="row my-3">
+
+  <div class="col-sm alert dashboard-alert-blue mx-2">
+    <div><small>Total Teachers Count</small></div>
+    <h4>{{teachers|length}}</h4>
+
+  </div>
+
+</div>
+
+<div class="row">
+    <div class="col">
+        <div class="table-responsive">
+            <table class="table table-hover table-sm" id="loans">
+                <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Taught</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for teacher in teachers %}
+                <tr style="cursor: pointer" data-href="{% url 'profile_view' id=teacher.id %}">
+                    <td><a><strong>{{teacher.first_name}}</strong></a></td>
+                    <td>{{teacher.last_name}}</td>
+                    <td><a>{{teacher.email}}</a></td>
+                    <td>{{teacher.subjects_taught}}</td>
+                    <td><a href="{% url 'profile_view' id=teacher.id %}" target="_blank">Teach</a></td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            </div>
+    </div>
+</div>
+
+
+{% endblock %}
+{% block js %}
+    <script src="{% static 'js/dashboard.js' %}?v=1.0.0"></script>
+    <script>
+        $('tr[data-href]').on("click", function()
+        {
+            document.location = $(this).data('href');
+        });
+    </script>
+{% endblock %}

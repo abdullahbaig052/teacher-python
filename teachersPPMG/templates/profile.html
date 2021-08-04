@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Profile" %}{% endblock %}
+
+{% block css %}
+{% endblock %}
+
+{% block content %}
+
+<div class="row pt-5">
+    <div class="col text-center"><h4>{{teacher.first_name}} {{teacher.last_name}}</h4>
+    <h6><a href="{% url 'home_view' %}">Back to Directory</a></h6></div>
+</div>
+<hr/>
+<h6 class="text-center alert dashboard-alert-blue dashboard-leaf text-uppercase">Profile Details</h6><!-- @@ changed to alert-secondary, added text-uppercase -->
+<div class="row">
+    <div class="col">
+        <div class="col">
+        <table class="table table-hover">
+            <tbody>
+            <tr>
+                <th>Profile Picture</th>
+                {% if '.jpg' in teacher.profile_picture or '.JPG' in teacher.profile_picture or '.png' in teacher.profile_picture or '.PNG' in teacher.profile_picture %}
+                    {% with 'imgs/teachers/'|add:teacher.profile_picture as image_static %}
+                    <td><img src="{% static image_static %}" alt="Profile Picture" width="15%"/></td>
+                    {% endwith %}
+                {%else%}
+                    <td><img src="http://www.gravatar.com/avatar/3b3be63a4c2a439b013787725dfce802?d=mp"/></td>
+                {% endif %}
+            </tr>
+            <tr>
+                <th>First Name</th>
+                <td>{{teacher.first_name}}</td>
+            </tr>
+            <tr>
+                <th>Last Name</th>
+                <td>{{teacher.last_name}}</td>
+            </tr>
+
+            <tr>
+                <th>Email</th>
+                <td>{{teacher.email}}</td>
+            </tr>
+            <tr>
+                <th>Phone Number</th>
+                <td>{{teacher.phone_number}}</td>
+            </tr>
+            <tr>
+                <th>Room Number</th>
+                <td>{{teacher.room_number}}</td>
+            </tr>
+            <tr>
+                <th>Subject Taught</th>
+                <td>{{teacher.subjects_taught}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    </div>
+</div>
+{% endblock %}
